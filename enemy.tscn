@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://bc3cgqtjympxx"]
+
+[ext_resource type="Script" path="res://enemy.gd" id="1_dr6it"]
+[ext_resource type="Texture2D" uid="uid://7doplsrc4kmx" path="res://icons_irasutoya/Enemy_goblin.png" id="1_jr5pi"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qmkm7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_jr5pi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tsysc"]
+size = Vector2(169.295, 192)
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_dr6it")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.29, 0.29)
+sprite_frames = SubResource("SpriteFrames_qmkm7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 1)
+scale = Vector2(0.525, 0.525)
+shape = SubResource("RectangleShape2D_tsysc")
