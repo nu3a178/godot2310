@@ -9,7 +9,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var direction_x = 1
 var screen_size
 
-
+@export var hp = 100
 func _ready():
 	screen_size = get_viewport_rect().size
 	
@@ -23,5 +23,11 @@ func _physics_process(delta):
 
 	velocity.x = SPEED * direction_x
 	
-		
 	move_and_slide()
+	
+func decreaseHp(v):
+	hp -= v
+	print(name+"は"+str(v)+"のダメージを受けた")
+	if hp <= 0:
+		print(name+"は死んだ")
+		queue_free()

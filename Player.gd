@@ -9,6 +9,11 @@ var dash_tired = {"is":false,"duration":0}
 var screen_size 
 const SPEED = 300
 var speed = 300.0
+@export var maxStamina = 10
+var stamina = maxStamina
+var time_notUsingStamina = 0
+@export var time_gainStamina = 2
+@export var speed_gainStamina = 2
 const JUMP_VELOCITY = -500.0
 var looking_at =1
 var direction = 0
@@ -23,7 +28,12 @@ func _ready():
 	
 func _physics_process(delta):
 	behavior.duration += delta 
+	time_notUsingStamina +=delta
 	
+	if time_notUsingStamina > time_gainStamina and stamina < maxStamina:
+		stamina += speed_gainStamina*delta
+	if stamina > maxStamina:
+		stamina = maxStamina
 	#通常の状態では、強制的に速度を一定に保つ。
 	if not is_dashing.is and not dash_tired.is:
 		speed =SPEED
@@ -70,8 +80,10 @@ func dashing(delta):
 	var dash_rate = 5.0
 	#"dash"でないときに、ダッシュに割り当てられたボタンが押されたなら、
 	#"dash"になり、スピードがdash_rateだけ乗算される。
-	if Input.is_action_just_pressed("dash") and not is_dashing.is :
+	if Input.is_action_just_pressed("dash") and stamina >= 2 and not is_dashing.is :
 		speed *= dash_rate
+		stamina -=2
+		time_notUsingStamina = 0
 		is_dashing.is = true
 		
 	#"dash"が0.15秒持続したら、"tired"になり、スピードが元の値の半分になる。

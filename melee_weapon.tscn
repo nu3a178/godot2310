@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cwdljn0u5ljud"]
 
 [ext_resource type="Script" path="res://melee_weapon.gd" id="1_pgaa8"]
-[ext_resource type="Texture2D" uid="uid://dec4m0uu0ulde" path="res://icons_irasutoya/Weapon_sword.png" id="1_vex7d"]
+[ext_resource type="Texture2D" uid="uid://dec4m0uu0ulde" path="res://icons/Weapon_sword.png" id="2_1j6ks"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_wdtty"]
 radius = 6.99696
@@ -14,15 +14,19 @@ script = ExtResource("1_pgaa8")
 position = Vector2(77, 1.07288e-06)
 rotation = 0.829213
 scale = Vector2(0.0971501, 0.0920704)
-texture = ExtResource("1_vex7d")
+texture = ExtResource("2_1j6ks")
 
 [node name="Timer" type="Timer" parent="."]
 one_shot = true
 autostart = true
 
 [node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(82, 1)
 rotation = 4.7154
 shape = SubResource("CapsuleShape2D_wdtty")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

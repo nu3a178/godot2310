@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3 uid="uid://dkmcgnvo3qt6w"]
+[gd_scene load_steps=6 format=3 uid="uid://dkmcgnvo3qt6w"]
 
 [ext_resource type="PackedScene" uid="uid://t2y60b8cg208" path="res://floor.tscn" id="1_coqxh"]
 [ext_resource type="PackedScene" uid="uid://jf4w802fbnfi" path="res://player.tscn" id="2_e1hhm"]
 [ext_resource type="PackedScene" uid="uid://bc3cgqtjympxx" path="res://enemy.tscn" id="3_oo2et"]
+[ext_resource type="Script" path="res://PlayerStaminaBar.gd" id="4_ycv06"]
+[ext_resource type="Texture2D" uid="uid://ca0kiclrmwuuh" path="res://icons/lightning.png" id="5_b7ogi"]
 
 [node name="Main" type="Node"]
 
@@ -14,3 +16,26 @@ position = Vector2(75, 477)
 
 [node name="Enemy" parent="." instance=ExtResource("3_oo2et")]
 position = Vector2(999, 465)
+
+[node name="PlayerStaminaBar" type="ProgressBar" parent="."]
+self_modulate = Color(1, 1, 0, 1)
+top_level = true
+offset_left = 22.0
+offset_top = 23.0
+offset_right = 334.0
+offset_bottom = 60.0
+show_percentage = false
+script = ExtResource("4_ycv06")
+
+[node name="Label" type="Label" parent="PlayerStaminaBar"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 39.0
+offset_right = 133.0
+offset_bottom = 65.0
+text = "stamina/max"
+
+[node name="Lightning" type="Sprite2D" parent="PlayerStaminaBar"]
+position = Vector2(12.1667, 49.875)
+scale = Vector2(0.0793963, 0.0793963)
+texture = ExtResource("5_b7ogi")

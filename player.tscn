@@ -1,15 +1,15 @@
 [gd_scene load_steps=7 format=3 uid="uid://jf4w802fbnfi"]
 
 [ext_resource type="Script" path="res://Player.gd" id="1_1x6ma"]
-[ext_resource type="Texture2D" uid="uid://qbaypc2y103l" path="res://icons_irasutoya/Man_idle.png" id="1_c34n6"]
-[ext_resource type="Texture2D" uid="uid://bqpunpbwtjfy1" path="res://icons_irasutoya/Man_jump.png" id="3_46qtx"]
+[ext_resource type="Texture2D" uid="uid://qbaypc2y103l" path="res://icons/Man_idle.png" id="2_7gjh3"]
+[ext_resource type="Texture2D" uid="uid://bqpunpbwtjfy1" path="res://icons/Man_jump.png" id="3_gn61p"]
 [ext_resource type="Script" path="res://PlayerCondition.gd" id="4_jo5ml"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_amlxy"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_c34n6")
+"texture": ExtResource("2_7gjh3")
 }],
 "loop": true,
 "name": &"idle",
@@ -17,7 +17,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_46qtx")
+"texture": ExtResource("3_gn61p")
 }],
 "loop": true,
 "name": &"jump",
@@ -43,6 +43,7 @@ scale = Vector2(2.68909, -5.71054)
 shape = SubResource("CapsuleShape2D_mt3y0")
 
 [node name="PlayerCondition" type="Label" parent="."]
+visible = false
 offset_left = -31.0
 offset_top = -249.0
 offset_right = 96.0
