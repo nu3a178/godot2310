@@ -43,6 +43,7 @@ scale = Vector2(2.68909, -5.71054)
 shape = SubResource("CapsuleShape2D_mt3y0")
 
 [node name="PlayerCondition" type="Label" parent="."]
+visible = false
 offset_left = -31.0
 offset_top = -249.0
 offset_right = 96.0

@@ -7,22 +7,36 @@ var behavior = {"name":"init","duration":0}
 var is_dashing = {"is":false,"duration":0,"cooldown":0}
 var dash_tired = {"is":false,"duration":0}
 var screen_size 
+
 const SPEED = 300
 var speed = 300.0
+
 @export var maxStamina = 10
 var stamina = maxStamina
 var time_notUsingStamina = 0
 @export var time_gainStamina = 2
 @export var speed_gainStamina = 2
+
 const JUMP_VELOCITY = -500.0
+
 var looking_at =1
 var direction = 0
+
 var weapon_melee = preload("res://melee_weapon.tscn")
 var weapon_gun = preload("res://gun_weapon.tscn")
+var bullet = preload("res://bullet.tscn")
+@export var ammo = 10
+var magazineAmmo = ammo
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
 var allAttackTypes = ["melee","gun"]
 var attackType 
+
+var reloadSpan = 3
+var reloadProgress = 0
+var is_reloading =false
+
 func _ready():
 	screen_size = get_viewport_rect().size
 	print(screen_size)
@@ -33,6 +47,14 @@ func _physics_process(delta):
 	behavior.duration += delta 
 	time_notUsingStamina +=delta
 	
+	if is_reloading :
+		reloadProgress +=delta
+		if reloadProgress >= reloadSpan:
+			print("リロード完了")
+			ammo = magazineAmmo
+			is_reloading = false
+			reloadProgress =0
+			
 	if time_notUsingStamina > time_gainStamina and stamina < maxStamina:
 		stamina += speed_gainStamina*delta
 	if stamina > maxStamina:
@@ -47,7 +69,12 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("attack"):
 		attack()
 		
-			
+	
+	if Input.is_action_just_pressed("reload") :
+		if ammo >= magazineAmmo:
+			print("マガジンはフルだ")
+		else:
+			startReload()
 		
 		
 	# Add the gravity.
@@ -90,9 +117,12 @@ func dashing(delta):
 	var dash_rate = 5.0
 	#"is_dashing"がtrueでないときに、ダッシュに割り当てられたボタンが押されたなら、
 	#"is_dashing"がtrueになり、スピードがdash_rateだけ乗算される。
-	if Input.is_action_just_pressed("dash") and stamina >= 2 and not is_dashing.is :
+	if Input.is_action_just_pressed("dash") and direction !=0 and stamina > 0 and not is_dashing.is :
 		speed *= dash_rate
-		stamina -=2
+		if stamina< 2:
+			stamina = 0
+		else:
+			stamina -=2
 		time_notUsingStamina = 0
 		is_dashing.is = true
 		
@@ -130,7 +160,21 @@ func attack():
 				atk.rotate_reverse = true
 			add_child(atk)
 		"gun":
-			pass
+			if is_reloading:
+				print("リロード中は撃てない")
+			else:
+				var gun =$"gun_weapon"
+				if ammo >0:
+					ammo -=1
+					var atk =bullet.instantiate()
+					gun.add_child(atk)
+					if ammo == 0:
+						print("弾切れ。リロードします")
+						startReload()
+				else:
+					print("弾切れです")
+			
+			
 	
 func change_weapon():
 	var before = attackType
@@ -147,4 +191,9 @@ func change_weapon():
 	else :
 		print("gunを削除")
 		remove_child($"gun_weapon")
+	
+func startReload():
+	print("リロード中")
+	is_reloading = true
+	
 	
