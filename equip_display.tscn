@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://dj2y325gskerx"]
+
+[ext_resource type="Texture2D" uid="uid://c8lk5bpcxmevm" path="res://icons/gun.png" id="1_5lfbj"]
+[ext_resource type="Script" path="res://equip_display.gd" id="1_8rb5o"]
+[ext_resource type="Texture2D" uid="uid://dec4m0uu0ulde" path="res://icons/Weapon_sword.png" id="2_epx5r"]
+[ext_resource type="Texture2D" uid="uid://d2eix7sbvf11l" path="res://icons/arrowhead-1.png" id="3_8o5ww"]
+
+[node name="EquipDisplay" type="Node2D"]
+position = Vector2(1, -1)
+rotation = 3.14159
+script = ExtResource("1_8rb5o")
+
+[node name="Gun" type="Sprite2D" parent="."]
+position = Vector2(61, -58)
+scale = Vector2(0.306429, 0.306429)
+texture = ExtResource("1_5lfbj")
+
+[node name="WeaponSword" type="Sprite2D" parent="."]
+position = Vector2(-66, 64)
+rotation = -3.14159
+scale = Vector2(0.143194, 0.143194)
+texture = ExtResource("2_epx5r")
+
+[node name="Arrowhead-1" type="Sprite2D" parent="."]
+position = Vector2(41, 41)
+rotation = 1.5708
+scale = Vector2(0.163293, 0.164509)
+texture = ExtResource("3_8o5ww")
+
+[node name="Arrowhead-2" type="Sprite2D" parent="."]
+position = Vector2(-43, -39)
+rotation = -1.5708
+scale = Vector2(0.163293, 0.164509)
+texture = ExtResource("3_8o5ww")
