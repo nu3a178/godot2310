@@ -8,8 +8,10 @@ const JUMP_VELOCITY = -400.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var direction_x = 1
 var screen_size
+var blood_exp = preload("res://blood_exp.tscn")
 
 @export var hp = 100
+const TYPE = "enemy"
 func _ready():
 	screen_size = get_viewport_rect().size
 	
@@ -29,5 +31,13 @@ func decreaseHp(v):
 	hp -= v
 	print(name+"は"+str(v)+"のダメージを受けた")
 	if hp <= 0:
-		print(name+"は死んだ")
-		queue_free()
+		dead()
+		
+
+func dead():
+	var exp = blood_exp.instantiate()
+	exp.position = position
+	exp.position.y -= 50 
+	add_sibling(exp)
+	print(name+"は死んだ")
+	queue_free()

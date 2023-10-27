@@ -1,13 +1,16 @@
-[gd_scene load_steps=9 format=3 uid="uid://dkmcgnvo3qt6w"]
+[gd_scene load_steps=11 format=3 uid="uid://dkmcgnvo3qt6w"]
 
 [ext_resource type="PackedScene" uid="uid://t2y60b8cg208" path="res://floor.tscn" id="1_coqxh"]
 [ext_resource type="PackedScene" uid="uid://jf4w802fbnfi" path="res://player.tscn" id="2_e1hhm"]
 [ext_resource type="PackedScene" uid="uid://bc3cgqtjympxx" path="res://enemy.tscn" id="3_oo2et"]
 [ext_resource type="Script" path="res://PlayerStaminaBar.gd" id="4_ycv06"]
 [ext_resource type="Texture2D" uid="uid://ca0kiclrmwuuh" path="res://icons/lightning.png" id="5_b7ogi"]
-[ext_resource type="Script" path="res://AmmoDisplay.gd" id="6_lps1m"]
-[ext_resource type="Texture2D" uid="uid://c8lk5bpcxmevm" path="res://icons/gun.png" id="6_p17gv"]
+[ext_resource type="PackedScene" uid="uid://dmh0qwrj2ogn4" path="res://ammo_display.tscn" id="7_rn2j2"]
 [ext_resource type="PackedScene" uid="uid://dj2y325gskerx" path="res://equip_display.tscn" id="8_bvquk"]
+[ext_resource type="PackedScene" uid="uid://dmih37hqpuln4" path="res://enemy_generator.tscn" id="8_c71ki"]
+[ext_resource type="Script" path="res://ReloadingProgressBar.gd" id="9_je6p7"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_d1v2q"]
 
 [node name="Main" type="Node"]
 
@@ -23,10 +26,10 @@ position = Vector2(999, 465)
 [node name="PlayerStaminaBar" type="ProgressBar" parent="."]
 self_modulate = Color(1, 1, 0, 1)
 top_level = true
-offset_left = 22.0
-offset_top = 23.0
-offset_right = 334.0
-offset_bottom = 60.0
+offset_left = 16.0
+offset_top = 35.0
+offset_right = 459.0
+offset_bottom = 41.0
 show_percentage = false
 script = ExtResource("4_ycv06")
 
@@ -43,31 +46,34 @@ position = Vector2(19, 19)
 scale = Vector2(0.0793963, 0.0793963)
 texture = ExtResource("5_b7ogi")
 
-[node name="AmmoDisplay" type="Node2D" parent="."]
-position = Vector2(6, -18)
-script = ExtResource("6_lps1m")
-
-[node name="Gun" type="Sprite2D" parent="AmmoDisplay"]
-position = Vector2(39, 112)
-scale = Vector2(0.104616, 0.104616)
-texture = ExtResource("6_p17gv")
-
-[node name="Label" type="Label" parent="AmmoDisplay"]
-offset_left = 69.0
-offset_top = 96.0
-offset_right = 119.0
-offset_bottom = 122.0
-text = "ammo"
-
-[node name="ProgressBar" type="ProgressBar" parent="AmmoDisplay"]
-modulate = Color(1, 0.411765, 0.172549, 1)
-self_modulate = Color(0.964706, 0, 0, 1)
-show_behind_parent = true
-offset_left = 16.0
-offset_top = 91.0
-offset_right = 329.0
-offset_bottom = 128.0
-show_percentage = false
-
 [node name="EquipDisplay" parent="." instance=ExtResource("8_bvquk")]
 position = Vector2(7, 650)
+
+[node name="AmmoDisplay" parent="EquipDisplay" instance=ExtResource("7_rn2j2")]
+position = Vector2(-87, 203)
+rotation = -3.14159
+
+[node name="EnemyGenerator" parent="." instance=ExtResource("8_c71ki")]
+
+[node name="ReloadingProgressBar" type="ProgressBar" parent="."]
+self_modulate = Color(0.964706, 0, 0, 1)
+show_behind_parent = true
+anchors_preset = -1
+anchor_left = -0.0208333
+offset_left = 369.0
+offset_top = 590.0
+offset_right = 774.0
+offset_bottom = 603.0
+show_percentage = false
+script = ExtResource("9_je6p7")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="ReloadingProgressBar"]
+layout_mode = 0
+offset_left = 167.0
+offset_top = -7.0
+offset_right = 257.0
+offset_bottom = 19.0
+text = "Reloading..."
+label_settings = SubResource("LabelSettings_d1v2q")
+justification_flags = 162

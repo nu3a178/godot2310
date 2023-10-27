@@ -4,6 +4,9 @@ extends CharacterBody2D
 #	[name]:動作状態の名称。
 #	[duration]:その状態になってから経過した時間。
 var behavior = {"name":"init","duration":0}
+
+#ダッシュ時のスピード倍率。
+var dash_rate = 5.0
 var is_dashing = {"is":false,"duration":0,"cooldown":0}
 var dash_tired = {"is":false,"duration":0}
 var screen_size 
@@ -113,8 +116,7 @@ func _physics_process(delta):
 #dashing:ダッシュに関連するメソッド。
 func dashing(delta):
 	
-	#ダッシュ時のスピード倍率。
-	var dash_rate = 5.0
+
 	#"is_dashing"がtrueでないときに、ダッシュに割り当てられたボタンが押されたなら、
 	#"is_dashing"がtrueになり、スピードがdash_rateだけ乗算される。
 	if Input.is_action_just_pressed("dash") and direction !=0 and stamina > 0 and not is_dashing.is :
@@ -189,7 +191,6 @@ func change_weapon():
 		var gun = weapon_gun.instantiate()
 		add_child(gun)
 	else :
-		print("gunを削除")
 		remove_child($"gun_weapon")
 	
 func startReload():

@@ -23,6 +23,6 @@ func _process(delta):
 
 func _on_area_2d_body_entered(body):
 	print("近接攻撃が"+body.name+"に当たった")
-	if body.name =="Enemy":
+	if body.TYPE =="enemy":
 		body.decreaseHp(atk)
 	

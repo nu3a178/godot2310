@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://dmh0qwrj2ogn4"]
+
+[ext_resource type="Script" path="res://AmmoDisplay.gd" id="1_q7afj"]
+[ext_resource type="Texture2D" uid="uid://c8lk5bpcxmevm" path="res://icons/gun.png" id="2_uq4d8"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4qt3s"]
+font_size = 40
+outline_size = 20
+outline_color = Color(0, 0, 0, 1)
+
+[node name="AmmoDisplay" type="Node2D"]
+z_index = 1
+position = Vector2(-20, -133)
+script = ExtResource("1_q7afj")
+
+[node name="Gun" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(39, 112)
+scale = Vector2(0.104616, 0.104616)
+texture = ExtResource("2_uq4d8")
+
+[node name="Label" type="Label" parent="."]
+offset_left = 52.0
+offset_top = 68.0
+offset_right = 175.0
+offset_bottom = 126.0
+text = "ammo"
+label_settings = SubResource("LabelSettings_4qt3s")
+metadata/_edit_use_anchors_ = true

@@ -15,4 +15,5 @@ func _process(_delta):
 	conditions[2]=("speed :"+str($"../../Player".speed))
 	conditions[3]=("dashing :"+str($"../../Player".is_dashing))
 	conditions[4]=("dash_tired :"+str($"../../Player".dash_tired))
+	conditions[4]=("attackType :"+str($"../../Player".attackType))
 	text = "\n".join(conditions)

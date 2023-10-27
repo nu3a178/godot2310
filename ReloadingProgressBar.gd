@@ -1,18 +1,14 @@
-extends Node2D
+extends ProgressBar
 
-var pro 
-var span 
-var ammo
-var plr
+var plr 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	plr = $"../../Player"
-	span =plr.reloadSpan
+	plr = $"../Player"
 	pass # Replace with function body.
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pro = plr.reloadProgress
-	$"Label".text = str(plr.ammo)
+	visible = plr.is_reloading
+	value = (plr.reloadProgress/plr.reloadSpan)*100
 	pass
