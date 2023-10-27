@@ -23,10 +23,11 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	plr_equipping = plr.attackType
-	if snapped(rotation,0.3) == snapped(target_rotation[plr_equipping],0.3):
-		rotation = target_rotation[plr_equipping]
-	else:
-		rotation += delta*angular_speed
-		if rotation <0:
-			rotation += 2*PI
+	if plr != null:
+		plr_equipping = plr.attackType
+		if snapped(rotation,0.3) == snapped(target_rotation[plr_equipping],0.3):
+			rotation = target_rotation[plr_equipping]
+		else:
+			rotation += delta*angular_speed
+			if rotation <0:
+				rotation += 2*PI

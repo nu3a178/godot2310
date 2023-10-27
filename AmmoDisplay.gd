@@ -13,6 +13,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pro = plr.reloadProgress
-	$"Label".text = str(plr.ammo)
-	pass
+	if plr != null:
+		pro = plr.reloadProgress
+		$"Label".text = str(plr.ammo)
+	

@@ -35,9 +35,9 @@ func decreaseHp(v):
 		
 
 func dead():
-	var exp = blood_exp.instantiate()
-	exp.position = position
-	exp.position.y -= 50 
-	add_sibling(exp)
+	var explo = blood_exp.instantiate()
+	explo.position = position
+	explo.position.y -= 50 
+	add_sibling(explo)
 	print(name+"は死んだ")
 	queue_free()

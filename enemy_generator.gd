@@ -19,3 +19,13 @@ func _on_timer_timeout():
 	eneInstance.name ="enemy"+str(counter)
 	add_child(eneInstance)
 	pass # Replace with function body.
+
+
+func _on_player_tree_exited():
+	$"Timer".stop()
+	pass # Replace with function body.
+
+
+func _on_button_button_up():
+	$"Timer".start()
+	pass # Replace with function body.

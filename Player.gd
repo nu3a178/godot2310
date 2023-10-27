@@ -1,9 +1,19 @@
 extends CharacterBody2D
 
+@export var hp = 10
+
+@export var maxStamina = 10
+var stamina = maxStamina
+var time_notUsingStamina = 0
+@export var time_gainStamina = 2
+@export var speed_gainStamina = 2
+
 #behavior:キャラクターの動作状態。
 #	[name]:動作状態の名称。
 #	[duration]:その状態になってから経過した時間。
 var behavior = {"name":"init","duration":0}
+
+
 
 #ダッシュ時のスピード倍率。
 var dash_rate = 5.0
@@ -14,11 +24,7 @@ var screen_size
 const SPEED = 300
 var speed = 300.0
 
-@export var maxStamina = 10
-var stamina = maxStamina
-var time_notUsingStamina = 0
-@export var time_gainStamina = 2
-@export var speed_gainStamina = 2
+
 
 const JUMP_VELOCITY = -500.0
 
@@ -28,6 +34,8 @@ var direction = 0
 var weapon_melee = preload("res://melee_weapon.tscn")
 var weapon_gun = preload("res://gun_weapon.tscn")
 var bullet = preload("res://bullet.tscn")
+var bld_exp =preload("res://blood_exp.tscn")
+
 @export var ammo = 10
 var magazineAmmo = ammo
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -113,6 +121,11 @@ func _physics_process(delta):
 
 	move_and_slide()
 	
+func _on_area_2d_body_entered(body):
+	if body.TYPE != null and body.TYPE =="enemy":
+		print("敵にぶつかった")
+		decreaseHp()
+		
 #dashing:ダッシュに関連するメソッド。
 func dashing(delta):
 	
@@ -198,3 +211,18 @@ func startReload():
 	is_reloading = true
 	
 	
+func decreaseHp(v=1):
+	hp -= v
+	if hp <= 0:
+		dead()
+		
+func dead():
+	print("しにました")
+	var bld = bld_exp.instantiate()
+	bld.position = position
+	add_sibling(bld)
+	queue_free()
+	
+
+
+

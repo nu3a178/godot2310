@@ -31,6 +31,7 @@ height = 29.3567
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 script = ExtResource("1_1x6ma")
+hp = 3
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.455, 0.455)
@@ -49,3 +50,14 @@ offset_top = -249.0
 offset_right = 96.0
 offset_bottom = -144.0
 script = ExtResource("4_jo5ml")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-4.26829, -0.178571)
+scale = Vector2(2.68909, -5.71054)
+shape = SubResource("CapsuleShape2D_mt3y0")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
