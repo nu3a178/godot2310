@@ -13,8 +13,17 @@ func _process(delta):
 func showDmg(value,type,pos):
 	
 	var l = dLabel.instantiate()
-	l.damage_of = type
+	var color
+	if value ==0:
+		color = Color(0.4, 0.4, 0.4, 1)
+	elif type =="enemy":
+		color = Color(1,1,0,1)	
+	elif type =="player":
+		color = Color(1,0,0,1)	
+	elif type =="regain":
+		color = Color(0,1,0,1)	
+
+	l.color = color
 	l.dValue = value
 	l.position = pos
-	print("ダメージ表示"+str(value)+type)
 	add_child(l)

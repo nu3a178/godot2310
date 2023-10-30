@@ -1,25 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://nov4oxs7qxoj"]
+[gd_scene load_steps=4 format=3 uid="uid://nov4oxs7qxoj"]
 
 [ext_resource type="Script" path="res://DamageLabel.gd" id="1_82qyx"]
+[ext_resource type="FontFile" uid="uid://bbd7k42ywbgi8" path="res://fonts/CASCADIACODE.TTF" id="2_emeye"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_3gw10"]
-font_size = 22
-font_color = Color(1, 1, 0, 1)
-outline_size = 8
+line_spacing = 5.0
+font = ExtResource("2_emeye")
+font_size = 200
+outline_size = 80
 outline_color = Color(0, 0, 0, 1)
 
 [node name="DamageLabel" type="Node2D"]
 script = ExtResource("1_82qyx")
 
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "test"
-label_settings = SubResource("LabelSettings_3gw10")
-
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.7
 one_shot = true
 autostart = true
+
+[node name="Label" type="Label" parent="."]
+offset_right = 104.0
+offset_bottom = 41.0
+scale = Vector2(0.10135, 0.10135)
+text = "test"
+label_settings = SubResource("LabelSettings_3gw10")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

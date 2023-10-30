@@ -13,7 +13,11 @@ var time_notUsingStamina = 0
 #	[duration]:その状態になってから経過した時間。
 var behavior = {"name":"init","duration":0}
 
-
+#invinciblity:キャラクターの無敵状態。
+#	[is]:無敵状態かどうか。デフォルトではfalse。
+#	[duration]:無敵状態になってからの経過時間。
+#	[period]:無敵の制限時間。
+var invinciblity = {"is":false ,"duration":0,"period":0}
 
 #ダッシュ時のスピード倍率。
 var dash_rate = 5.0
@@ -62,6 +66,16 @@ func _physics_process(delta):
 	behavior.duration += delta 
 	time_notUsingStamina +=delta
 	
+	#invinciblityのisプロパティがtrueのとき、durationプロパティのカウントを進める。
+	if invinciblity.is :
+		var inv = invinciblity
+		inv.duration += delta
+		#durationがperiodを超えたとき、無敵を解除する。
+		if inv.duration > inv.period:
+			inv.is = false
+			inv.duration= 0
+			inv.period = 0
+	
 	if is_reloading :
 		reloadProgress +=delta
 		if reloadProgress >= reloadSpan:
@@ -74,13 +88,16 @@ func _physics_process(delta):
 		stamina += speed_gainStamina*delta
 	if stamina > maxStamina:
 		stamina = maxStamina
+		
 	#通常の状態では、強制的に速度を一定に保つ。
 	if not is_dashing.is and not dash_tired.is:
 		speed =SPEED
+		
 	dashing(delta)
 	
 	if Input.is_action_just_pressed("change_weapon"):
 		change_weapon()
+		
 	if Input.is_action_just_pressed("attack"):
 		attack()
 		
@@ -133,7 +150,6 @@ func _on_area_2d_body_entered(body):
 #dashing:ダッシュに関連するメソッド。
 func dashing(delta):
 	
-
 	#"is_dashing"がtrueでないときに、ダッシュに割り当てられたボタンが押されたなら、
 	#"is_dashing"がtrueになり、スピードがdash_rateだけ乗算される。
 	if Input.is_action_just_pressed("dash") and direction !=0 and stamina > 0 and not is_dashing.is :
@@ -193,7 +209,9 @@ func attack():
 				else:
 					print("弾切れです")
 			
-			
+func invincible(period):
+	invinciblity.is = true
+	invinciblity.period = period
 	
 func change_weapon():
 	var before = attackType
@@ -216,8 +234,11 @@ func startReload():
 	
 	
 func decreaseHp(v=1):
+	if invinciblity.is:
+		v = 0
+	else:
+		bLog.addLog(str(v)+"のダメージを受けた")
 	hp -= v
-	bLog.addLog(str(v)+"のダメージを受けた")
 	dmgD.showDmg(v,"player",position)
 	if hp <= 0:
 		dead()
