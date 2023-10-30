@@ -4,11 +4,12 @@ var rotate_reverse =false
 var rotate_init 
 var angular_speed = PI
 @export var atk = 1
+var bLog
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	rotate_init = (-PI/3 if rotate_reverse else -PI*2/3)
 	rotation = rotate_init
-	
+	bLog =$"../../BattleLog"
 	pass # Replace with function body.
 
 
@@ -22,7 +23,7 @@ func _process(delta):
 
 
 func _on_area_2d_body_entered(body):
-	print("近接攻撃が"+body.name+"に当たった")
+	bLog.addLog("近接攻撃が"+body.name+"に当たった")
 	if body.TYPE =="enemy":
 		body.decreaseHp(atk)
 	

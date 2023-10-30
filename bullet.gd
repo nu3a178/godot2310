@@ -7,6 +7,7 @@ var v
 var pos
 @export var atk = 1
 var spr 
+var bLog 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	direction = $"../../../Player".looking_at
@@ -15,6 +16,7 @@ func _ready():
 	pos =$"../../gun_weapon".get_global_position()
 	set_global_position(pos)
 	spr = $"Sprite2D"
+	bLog = $"../../../BattleLog"
 	pass # Replace with function body.
 
 
@@ -33,7 +35,7 @@ func _process(delta):
 
 
 func _on_area_2d_body_entered(body):
-	print("射撃が"+body.name+"に当たった")
+	bLog.addLog("射撃が"+body.name+"に当たった")
 	if body.TYPE =="enemy":
 		body.decreaseHp(atk)
 	queue_free()

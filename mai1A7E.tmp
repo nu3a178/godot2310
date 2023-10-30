@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dkmcgnvo3qt6w"]
+[gd_scene load_steps=17 format=3 uid="uid://dkmcgnvo3qt6w"]
 
 [ext_resource type="PackedScene" uid="uid://t2y60b8cg208" path="res://floor.tscn" id="1_coqxh"]
 [ext_resource type="PackedScene" uid="uid://jf4w802fbnfi" path="res://player.tscn" id="2_e1hhm"]
@@ -13,7 +13,6 @@
 [ext_resource type="Script" path="res://Button.gd" id="12_ms33o"]
 [ext_resource type="Script" path="res://FullScreenDisplay.gd" id="12_mw385"]
 [ext_resource type="Script" path="res://BattleLog.gd" id="13_ewtrl"]
-[ext_resource type="Script" path="res://DmgDisplay.gd" id="14_psugj"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_d1v2q"]
 
@@ -23,7 +22,6 @@ outline_size = 10
 outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ebx6x"]
-font_size = 10
 
 [node name="Main" type="Node"]
 
@@ -140,12 +138,11 @@ text = "start"
 script = ExtResource("12_ms33o")
 
 [node name="BattleLog" type="Node2D" parent="."]
-position = Vector2(978, 0)
 script = ExtResource("13_ewtrl")
 
 [node name="ColorRect" type="ColorRect" parent="BattleLog"]
-offset_right = 175.0
-offset_bottom = 232.0
+offset_right = 223.0
+offset_bottom = 138.0
 color = Color(0.0823529, 0.0823529, 0.0823529, 0.596078)
 
 [node name="Label" type="Label" parent="BattleLog"]
@@ -154,9 +151,6 @@ offset_right = 225.0
 offset_bottom = 139.0
 text = "test"
 label_settings = SubResource("LabelSettings_ebx6x")
-
-[node name="DmgDisplay" type="Node2D" parent="."]
-script = ExtResource("14_psugj")
 
 [connection signal="tree_exited" from="Player" to="EnemyGenerator" method="_on_player_tree_exited"]
 [connection signal="tree_exited" from="Player" to="FullScreenDisplay" method="_on_player_tree_exited"]

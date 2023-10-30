@@ -48,10 +48,14 @@ var reloadSpan = 3
 var reloadProgress = 0
 var is_reloading =false
 
+var bLog 
+var dmgD
 func _ready():
 	screen_size = get_viewport_rect().size
 	print(screen_size)
 	attackType = allAttackTypes[0]
+	bLog = $"../BattleLog"
+	dmgD = $"../DmgDisplay"
 	
 	
 func _physics_process(delta):
@@ -207,17 +211,19 @@ func change_weapon():
 		remove_child($"gun_weapon")
 	
 func startReload():
-	print("リロード中")
+	bLog.addLog("リロード中")
 	is_reloading = true
 	
 	
 func decreaseHp(v=1):
 	hp -= v
+	bLog.addLog(str(v)+"のダメージを受けた")
+	dmgD.showDmg(v,"player",position)
 	if hp <= 0:
 		dead()
 		
 func dead():
-	print("しにました")
+	bLog.addLog("死んだ")
 	var bld = bld_exp.instantiate()
 	bld.position = position
 	add_sibling(bld)
