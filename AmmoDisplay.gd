@@ -6,7 +6,7 @@ var ammo
 var plr
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	plr = $"../../Player"
+	plr = $"../../../Player"
 	span =plr.reloadSpan
 	pass # Replace with function body.
 

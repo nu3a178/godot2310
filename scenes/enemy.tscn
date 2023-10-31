@@ -50,3 +50,9 @@ offset_right = 40.0
 offset_bottom = -69.0
 script = ExtResource("3_5xy4d")
 metadata/_edit_use_anchors_ = true
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(-57, 37)
+
+[node name="CliffDetector" type="RayCast2D" parent="Node2D"]
+target_position = Vector2(-180, 43)

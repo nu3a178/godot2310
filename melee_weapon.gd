@@ -9,7 +9,7 @@ var bLog
 func _ready():
 	rotate_init = (-PI/3 if rotate_reverse else -PI*2/3)
 	rotation = rotate_init
-	bLog =$"../../BattleLog"
+	bLog =$"../../UI/BattleLog"
 	pass # Replace with function body.
 
 

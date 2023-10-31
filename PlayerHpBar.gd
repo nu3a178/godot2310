@@ -5,7 +5,7 @@ var maxhp
 var hp
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	plr = $"../Player"
+	plr = $"../../Player"
 	hp = plr.hp
 	maxhp = hp
 	print(str(hp)+"/"+str(maxhp))

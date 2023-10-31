@@ -31,14 +31,16 @@ var speed = 300.0
 
 
 const JUMP_VELOCITY = -500.0
+@export var air_jump = 1
+var max_air_jump = air_jump
 
 var looking_at =1
 var direction = 0
 
-var weapon_melee = preload("res://melee_weapon.tscn")
-var weapon_gun = preload("res://gun_weapon.tscn")
-var bullet = preload("res://bullet.tscn")
-var bld_exp =preload("res://blood_exp.tscn")
+var weapon_melee = preload("res://scenes/melee_weapon.tscn")
+var weapon_gun = preload("res://scenes/gun_weapon.tscn")
+var bullet = preload("res://scenes/bullet.tscn")
+var bld_exp =preload("res://scenes/blood_exp.tscn")
 
 @export var ammo = 10
 var magazineAmmo = ammo
@@ -58,7 +60,7 @@ func _ready():
 	screen_size = get_viewport_rect().size
 	print(screen_size)
 	attackType = allAttackTypes[0]
-	bLog = $"../BattleLog"
+	bLog = $"../UI/BattleLog"
 	dmgD = $"../DmgDisplay"
 	
 	
@@ -109,19 +111,25 @@ func _physics_process(delta):
 			startReload()
 		
 		
+	
 	# Add the gravity.
 	
 	if not is_on_floor():
 		$AnimatedSprite2D.animation = "jump"
 		velocity.y += gravity * delta
 	else:
+		air_jump = max_air_jump
 		$AnimatedSprite2D.animation = "idle"
 		switch_behavior("idle")
 
 	# Handle Jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
-		switch_behavior("jump")
-		velocity.y = JUMP_VELOCITY
+	if Input.is_action_just_pressed("jump"):
+		if is_on_floor():
+			switch_behavior("jump")
+			velocity.y = JUMP_VELOCITY
+		elif air_jump > 0:
+			air_jump -= 1
+			velocity.y = JUMP_VELOCITY
 
 	# 移動、および向いている方向について
 	if Input.is_action_pressed("move_left"):
@@ -135,7 +143,7 @@ func _physics_process(delta):
 		looking_at = direction
 	
 	#Playerの位置制限
-	if direction < 0 and 0 < position.x or 0 < direction  and position.x < screen_size.x :
+	if direction != 0  :
 		velocity.x = direction * speed
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
@@ -239,15 +247,18 @@ func decreaseHp(v=1):
 	else:
 		bLog.addLog(str(v)+"のダメージを受けた")
 	hp -= v
+	bLog.addLog(str(v)+"のダメージを 受けた")
 	dmgD.showDmg(v,"player",position)
 	if hp <= 0:
-		dead()
+		dead("YOU ARE DEAD")
 		
-func dead():
+func dead(will:String = ""):
 	bLog.addLog("死んだ")
 	var bld = bld_exp.instantiate()
 	bld.position = position
 	add_sibling(bld)
+	var fd = $"../FullScreenDisplay"
+	fd.showString(will)
 	queue_free()
 	
 
