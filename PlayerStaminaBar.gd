@@ -8,7 +8,7 @@ var format_string = "%*.*f"
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	l = $"Label"
-	plr =$"../Player"
+	plr =$"../../Player"
 	m = plr.maxStamina
 	max_value = m
 	pass # Replace with function body.

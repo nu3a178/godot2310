@@ -11,7 +11,8 @@ func _process(delta):
 	pass
 
 
-func _on_player_tree_exited():
+func showString(s):
 	visible = true
-	$"Label".text ="YOU　ARE　DEAD"
-	pass # Replace with function body.
+	$Label.text = s
+
+

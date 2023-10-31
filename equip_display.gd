@@ -9,7 +9,7 @@ var rotateSpan
 var t
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	plr = $"../Player"
+	plr = $"../../Player"
 	types = plr.allAttackTypes
 	rotateSpan = (2*PI)/len(types)
 	var tar = 0

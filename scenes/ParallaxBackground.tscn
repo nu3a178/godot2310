@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://1sya7oh3nuf4"]
+
+[ext_resource type="Texture2D" uid="uid://cas4wn70fuhh5" path="res://backgrounds/Desert.jpeg" id="1_17ydg"]
+
+[node name="ParallaxBackground" type="ParallaxBackground"]
+
+[node name="ParallaxLayer1" type="ParallaxLayer" parent="."]
+motion_mirroring = Vector2(1152, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer1"]
+position = Vector2(578.75, 401.5)
+scale = Vector2(2.54857, 2.33824)
+texture = ExtResource("1_17ydg")

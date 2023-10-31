@@ -1,6 +1,6 @@
 extends Node
 
-var ene = preload ("res://enemy.tscn")
+var ene = preload ("res://scenes/enemy.tscn")
 var counter = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
