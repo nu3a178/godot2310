@@ -1,11 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://dkmcgnvo3qt6w"]
+[gd_scene load_steps=20 format=3 uid="uid://dkmcgnvo3qt6w"]
 
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_7s0jn"]
 [ext_resource type="PackedScene" uid="uid://jf4w802fbnfi" path="res://scenes/player.tscn" id="2_e1hhm"]
 [ext_resource type="Script" path="res://PlayerStaminaBar.gd" id="4_ycv06"]
 [ext_resource type="Texture2D" uid="uid://ca0kiclrmwuuh" path="res://icons/lightning.png" id="5_b7ogi"]
 [ext_resource type="PackedScene" uid="uid://dmh0qwrj2ogn4" path="res://scenes/ammo_display.tscn" id="7_rn2j2"]
 [ext_resource type="PackedScene" uid="uid://dj2y325gskerx" path="res://scenes/equip_display.tscn" id="8_bvquk"]
-[ext_resource type="PackedScene" uid="uid://dmih37hqpuln4" path="res://scenes/enemy_generator.tscn" id="8_c71ki"]
 [ext_resource type="Script" path="res://ReloadingProgressBar.gd" id="9_je6p7"]
 [ext_resource type="Script" path="res://PlayerHpBar.gd" id="10_t4aif"]
 [ext_resource type="Texture2D" uid="uid://hnfjre6bhxjf" path="res://icons/heart_blur.png" id="11_f71mg"]
@@ -16,17 +16,24 @@
 [ext_resource type="Script" path="res://DmgDisplay.gd" id="14_psugj"]
 [ext_resource type="PackedScene" uid="uid://1sya7oh3nuf4" path="res://scenes/ParallaxBackground.tscn" id="15_o3xry"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_6nrgp"]
-font_size = 40
-outline_size = 10
-outline_color = Color(0, 0, 0, 1)
-
 [sub_resource type="LabelSettings" id="LabelSettings_ebx6x"]
 font_size = 10
 
 [sub_resource type="LabelSettings" id="LabelSettings_d1v2q"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_6nrgp"]
+font_size = 40
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="Curve2D" id="Curve2D_fvyma"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -1902, 380, 0, 0, 0, 0, 65, 402, 0, 0, 0, 0, 69, 546, 0, 0, 0, 0, 1296, 542, 0, 0, 0, 0, 1288, 383, 0, 0, 0, 0, 3340, 401)
+}
+point_count = 6
+
 [node name="Main" type="Node"]
+script = ExtResource("1_7s0jn")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_left = -13.0
@@ -38,25 +45,6 @@ offset_bottom = 708.0
 
 [node name="Player" parent="." instance=ExtResource("2_e1hhm")]
 position = Vector2(175, 480)
-
-[node name="EnemyGenerator" parent="." instance=ExtResource("8_c71ki")]
-
-[node name="FullScreenDisplay" type="Node2D" parent="."]
-visible = false
-script = ExtResource("12_mw385")
-
-[node name="Label" type="Label" parent="FullScreenDisplay"]
-offset_left = 298.0
-offset_top = 222.0
-offset_right = 842.0
-offset_bottom = 351.0
-text = "ここにテキストを表示
-"
-label_settings = SubResource("LabelSettings_6nrgp")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Sprite2D" type="Sprite2D" parent="FullScreenDisplay"]
 
 [node name="UI" type="CanvasLayer" parent="."]
 
@@ -94,10 +82,10 @@ rotation = -3.14159
 [node name="PlayerStaminaBar" type="ProgressBar" parent="UI"]
 self_modulate = Color(1, 1, 0, 1)
 top_level = true
-offset_left = 348.0
-offset_top = 630.0
-offset_right = 775.0
-offset_bottom = 635.0
+offset_left = 42.0
+offset_top = 56.0
+offset_right = 469.0
+offset_bottom = 61.0
 show_percentage = false
 script = ExtResource("4_ycv06")
 
@@ -116,10 +104,10 @@ texture = ExtResource("5_b7ogi")
 
 [node name="PlayerHpBar" type="ProgressBar" parent="UI"]
 self_modulate = Color(0.996078, 0.0235294, 1, 1)
-offset_left = 347.0
-offset_top = 603.0
-offset_right = 775.0
-offset_bottom = 612.0
+offset_left = 41.0
+offset_top = 22.0
+offset_right = 469.0
+offset_bottom = 31.0
 show_percentage = false
 script = ExtResource("10_t4aif")
 
@@ -163,11 +151,44 @@ text = "Reloading..."
 label_settings = SubResource("LabelSettings_d1v2q")
 justification_flags = 162
 
+[node name="FullScreenDisplay" type="Node2D" parent="UI"]
+visible = false
+script = ExtResource("12_mw385")
+
+[node name="Label" type="Label" parent="UI/FullScreenDisplay"]
+offset_left = 298.0
+offset_top = 222.0
+offset_right = 842.0
+offset_bottom = 351.0
+text = "ここにテキストを表示
+"
+label_settings = SubResource("LabelSettings_6nrgp")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="UI/FullScreenDisplay"]
+
+[node name="EnemyCount" type="Label" parent="UI"]
+offset_left = 546.0
+offset_top = 14.0
+offset_right = 629.0
+offset_bottom = 40.0
+text = "EnemyLeft"
+
 [node name="DmgDisplay" type="Node2D" parent="."]
 script = ExtResource("14_psugj")
 
 [node name="ParallaxLayer" parent="." instance=ExtResource("15_o3xry")]
+visible = false
 
-[connection signal="tree_exited" from="Player" to="EnemyGenerator" method="_on_player_tree_exited"]
-[connection signal="button_up" from="UI/Button" to="EnemyGenerator" method="_on_button_button_up"]
-[connection signal="button_up" from="UI/Button" to="UI/Button" method="_on_button_up"]
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.525, 0.525)
+
+[node name="EnemySpawnPath" type="Path2D" parent="."]
+curve = SubResource("Curve2D_fvyma")
+
+[node name="Follow" type="PathFollow2D" parent="EnemySpawnPath"]
+position = Vector2(-1902, 380)
+rotation = 0.0111841
+
+[connection signal="button_up" from="UI/Button" to="." method="_on_button_button_up"]

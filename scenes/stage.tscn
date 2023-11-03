@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://d8pbblushwjo"]
+[gd_scene load_steps=4 format=3 uid="uid://d8pbblushwjo"]
 
 [ext_resource type="PackedScene" uid="uid://t2y60b8cg208" path="res://scenes/floor.tscn" id="1_u2pri"]
 [ext_resource type="PackedScene" uid="uid://dyw7mcpa8a8ds" path="res://scenes/block.tscn" id="2_faw7f"]
+[ext_resource type="PackedScene" uid="uid://cf1dpltrecau5" path="res://scenes/floor_floating.tscn" id="3_tgxpm"]
 
 [node name="Stage" type="Node"]
 
@@ -11,3 +12,24 @@ position = Vector2(682, 679)
 [node name="Block" parent="." instance=ExtResource("2_faw7f")]
 position = Vector2(970, 569)
 scale = Vector2(0.669361, 0.478775)
+
+[node name="Floor2" parent="." instance=ExtResource("1_u2pri")]
+position = Vector2(-1044, 548)
+
+[node name="Floor3" parent="." instance=ExtResource("1_u2pri")]
+position = Vector2(2434, 548)
+
+[node name="Floor_Floating" parent="." instance=ExtResource("3_tgxpm")]
+position = Vector2(199, 414)
+
+[node name="Floor_Floating2" parent="." instance=ExtResource("3_tgxpm")]
+position = Vector2(448, 414)
+
+[node name="Floor_Floating3" parent="." instance=ExtResource("3_tgxpm")]
+position = Vector2(698, 414)
+
+[node name="Floor_Floating4" parent="." instance=ExtResource("3_tgxpm")]
+position = Vector2(947, 414)
+
+[node name="Floor_Floating5" parent="." instance=ExtResource("3_tgxpm")]
+position = Vector2(1200, 414)

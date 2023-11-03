@@ -21,7 +21,7 @@ autostart = true
 [node name="Label" type="Label" parent="."]
 offset_right = 104.0
 offset_bottom = 41.0
-scale = Vector2(0.10135, 0.10135)
+scale = Vector2(0.24777, 0.24777)
 text = "test"
 label_settings = SubResource("LabelSettings_3gw10")
 

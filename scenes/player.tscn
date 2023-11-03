@@ -1,9 +1,9 @@
 [gd_scene load_steps=7 format=3 uid="uid://jf4w802fbnfi"]
 
-[ext_resource type="Script" path="res://Player.gd" id="1_1x6ma"]
+[ext_resource type="Script" path="res://scenes/player.gd" id="1_lh454"]
 [ext_resource type="Texture2D" uid="uid://qbaypc2y103l" path="res://icons/Man_idle.png" id="2_7gjh3"]
 [ext_resource type="Texture2D" uid="uid://bqpunpbwtjfy1" path="res://icons/Man_jump.png" id="3_gn61p"]
-[ext_resource type="Script" path="res://PlayerCondition.gd" id="4_jo5ml"]
+[ext_resource type="Script" path="res://scenes/PlayerCondition.gd" id="4_886pv"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_amlxy"]
 animations = [{
@@ -30,8 +30,8 @@ height = 29.3567
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
-script = ExtResource("1_1x6ma")
-hp = 3
+script = ExtResource("1_lh454")
+hp = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.455, 0.455)
@@ -49,7 +49,7 @@ offset_left = -31.0
 offset_top = -249.0
 offset_right = 96.0
 offset_bottom = -144.0
-script = ExtResource("4_jo5ml")
+script = ExtResource("4_886pv")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2
@@ -59,8 +59,5 @@ collision_mask = 4
 position = Vector2(-4.26829, -0.178571)
 scale = Vector2(2.68909, -5.71054)
 shape = SubResource("CapsuleShape2D_mt3y0")
-
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(0, -111)
 
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

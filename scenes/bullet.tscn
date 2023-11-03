@@ -21,4 +21,7 @@ collision_mask = 4
 scale = Vector2(1.11661, 1.12571)
 shape = SubResource("RectangleShape2D_yu1kc")
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

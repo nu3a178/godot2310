@@ -18,8 +18,8 @@ var cDetector
 const TYPE = "enemy"
 func _ready():
 	screen_size = get_viewport_rect().size
-	bLog = $"../../UI/BattleLog"
-	dmgD = $"../../DmgDisplay"
+	bLog = $"../UI/BattleLog"
+	dmgD = $"../DmgDisplay"
 	point = $Node2D
 	cDetector = $Node2D/CliffDetector
 	
@@ -29,8 +29,6 @@ func _physics_process(delta):
 			var obj = cDetector.get_collider()
 			if obj.TYPE != "Floor":
 				cDetector.add_exception(obj)
-			if obj.TYPE =="Floor":
-				pass
 		else:
 			reverse()
 			
@@ -62,4 +60,5 @@ func dead():
 	explo.position.y -= 50 
 	add_sibling(explo)
 	bLog.addLog(name+"は死んだ")
+	$"../".decreaseEnemyCount()
 	queue_free()

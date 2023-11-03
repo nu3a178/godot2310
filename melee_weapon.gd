@@ -25,5 +25,5 @@ func _process(delta):
 func _on_area_2d_body_entered(body):
 	bLog.addLog("近接攻撃が"+body.name+"に当たった")
 	if body.TYPE =="enemy":
-		body.decreaseHp(atk)
+		body.decreaseHp(int(atk*0.95 + (atk*0.1)*randf()))
 	

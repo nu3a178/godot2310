@@ -1,6 +1,6 @@
 extends CharacterBody2D
-
-@export var hp = 10
+const TYPE = "Player"
+@export var hp = 100
 
 @export var maxStamina = 10
 var stamina = maxStamina
@@ -30,7 +30,7 @@ var speed = 300.0
 
 
 
-const JUMP_VELOCITY = -500.0
+const JUMP_VELOCITY = -700.0
 @export var air_jump = 1
 var max_air_jump = air_jump
 
@@ -48,6 +48,9 @@ var magazineAmmo = ammo
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 var allAttackTypes = ["melee","gun"]
+var attackSpan = {"melee":0.5,"gun":0.3}
+var attackPower = {"melee":100,"gun":70}
+var time_notAttack = 0
 var attackType 
 
 var reloadSpan = 3
@@ -56,17 +59,21 @@ var is_reloading =false
 
 var bLog 
 var dmgD
+var ammoLabel
 func _ready():
 	screen_size = get_viewport_rect().size
 	print(screen_size)
 	attackType = allAttackTypes[0]
 	bLog = $"../UI/BattleLog"
 	dmgD = $"../DmgDisplay"
+	ammoLabel=$"../UI/EquipDisplay/AmmoDisplay/Label"
+	ammoLabel.text = str(ammo)
 	
 	
 func _physics_process(delta):
 	behavior.duration += delta 
 	time_notUsingStamina +=delta
+	time_notAttack +=delta
 	
 	#invinciblityのisプロパティがtrueのとき、durationプロパティのカウントを進める。
 	if invinciblity.is :
@@ -81,8 +88,9 @@ func _physics_process(delta):
 	if is_reloading :
 		reloadProgress +=delta
 		if reloadProgress >= reloadSpan:
-			print("リロード完了")
+			bLog.addLog("リロード完了")
 			ammo = magazineAmmo
+			ammoLabel.text = str(ammo)
 			is_reloading = false
 			reloadProgress =0
 			
@@ -100,7 +108,7 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("change_weapon"):
 		change_weapon()
 		
-	if Input.is_action_just_pressed("attack"):
+	if Input.is_action_pressed("attack"):
 		attack()
 		
 	
@@ -124,12 +132,15 @@ func _physics_process(delta):
 
 	# Handle Jump.
 	if Input.is_action_just_pressed("jump"):
-		if is_on_floor():
-			switch_behavior("jump")
-			velocity.y = JUMP_VELOCITY
-		elif air_jump > 0:
-			air_jump -= 1
-			velocity.y = JUMP_VELOCITY
+		if Input.is_action_pressed("move_down"):
+			position += Vector2(0,10)
+		else:
+			if is_on_floor():
+				switch_behavior("jump")
+				velocity.y = JUMP_VELOCITY
+			elif air_jump > 0:
+				air_jump -= 1
+				velocity.y = JUMP_VELOCITY
 
 	# 移動、および向いている方向について
 	if Input.is_action_pressed("move_left"):
@@ -198,24 +209,33 @@ func switch_behavior(n):
 func attack():
 	match attackType:
 		"melee":
-			var atk =weapon_melee.instantiate()
-			if looking_at > 0:
-				atk.rotate_reverse = true
-			add_child(atk)
+			if time_notAttack>attackSpan.melee:
+				var atk =weapon_melee.instantiate()
+				if looking_at > 0:
+					atk.rotate_reverse = true
+				atk.atk =attackPower.melee
+				add_child(atk)
+				time_notAttack=0
+			
 		"gun":
-			if is_reloading:
-				print("リロード中は撃てない")
-			else:
-				var gun =$"gun_weapon"
-				if ammo >0:
-					ammo -=1
-					var atk =bullet.instantiate()
-					gun.add_child(atk)
-					if ammo == 0:
-						print("弾切れ。リロードします")
-						startReload()
+			if time_notAttack>attackSpan.gun:
+				if is_reloading:
+					print("リロード中は撃てない")
 				else:
-					print("弾切れです")
+					var gun =$"gun_weapon"
+					if ammo >0:
+						ammo -=1
+						ammoLabel.text = str(ammo)
+						var atk =bullet.instantiate()
+						atk.position = gun.position
+						atk.atk =attackPower.gun
+						add_child(atk)
+						time_notAttack=0
+						if ammo == 0:
+							print("弾切れ。リロードします")
+							startReload()
+					else:
+						print("弾切れです")
 			
 func invincible(period):
 	invinciblity.is = true
@@ -257,10 +277,8 @@ func dead(will:String = ""):
 	var bld = bld_exp.instantiate()
 	bld.position = position
 	add_sibling(bld)
-	var fd = $"../FullScreenDisplay"
+	var fd = $"../UI/FullScreenDisplay"
 	fd.showString(will)
 	queue_free()
 	
-
-
 

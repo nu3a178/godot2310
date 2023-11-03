@@ -1,13 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4ihb4423bk6r"]
+[gd_scene load_steps=4 format=3 uid="uid://c4ihb4423bk6r"]
 
 [ext_resource type="PackedScene" uid="uid://bc3cgqtjympxx" path="res://scenes/enemy.tscn" id="1_wvxsh"]
-[ext_resource type="PackedScene" uid="uid://t2y60b8cg208" path="res://scenes/floor.tscn" id="2_3eyuw"]
+[ext_resource type="PackedScene" uid="uid://cf1dpltrecau5" path="res://scenes/floor_floating.tscn" id="2_drrrl"]
+[ext_resource type="PackedScene" uid="uid://jf4w802fbnfi" path="res://scenes/player.tscn" id="3_vw1xg"]
 
 [node name="test" type="Node2D"]
 
 [node name="Enemy" parent="." instance=ExtResource("1_wvxsh")]
 position = Vector2(555, 452)
 
-[node name="Floor" parent="." instance=ExtResource("2_3eyuw")]
-position = Vector2(583, 583)
-scale = Vector2(7.55252, 0.485224)
+[node name="Floor_Floating" parent="." instance=ExtResource("2_drrrl")]
+position = Vector2(541, 629)
+scale = Vector2(2.83153, 1.12483)
+
+[node name="Floor_Floating2" parent="." instance=ExtResource("2_drrrl")]
+position = Vector2(549, 377)
+scale = Vector2(2.83153, 1.12483)
+
+[node name="Player" parent="." instance=ExtResource("3_vw1xg")]
+position = Vector2(369, 500)

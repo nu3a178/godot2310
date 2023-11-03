@@ -23,7 +23,7 @@ size = Vector2(169.295, 192)
 z_index = -1
 collision_layer = 4
 script = ExtResource("1_dr6it")
-hp = 5
+hp = 500
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.29, 0.29)
